@@ -1,0 +1,4 @@
+.env
+dogecoin_data.csv
+dogecoin_lstm_model.pth
+scaler.joblib
