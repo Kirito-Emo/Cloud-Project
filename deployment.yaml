@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dogecoin-forecasting
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: dogecoin-forecasting
+  template:
+    metadata:
+      labels:
+        app: dogecoin-forecasting
+    spec:
+      containers:
+      - name: dogecoin-forecasting
+        image: cloud-project
+        ports:
+        - containerPort: 5000
