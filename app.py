@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import joblib
+from PIL import Image
 
 # Load the model and scaler
 @st.cache_resource
@@ -11,6 +12,8 @@ def load(transformer_path, model_path):
 
 # App title
 st.title('Dogecoin Price Prediction')
+image = Image.open('data/dogecoin-image.png')
+st.image(image, use_container_width=True)
 
 # Make predictions
 def inference(subject_data, transformer, model, feat_cols):
