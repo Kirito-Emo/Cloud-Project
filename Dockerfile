@@ -1,4 +1,4 @@
-FROM python:3.12.8
+FROM python:3.12.8-slim-bookworm
 
 WORKDIR /app
 
@@ -23,10 +23,8 @@ EXPOSE 8501
 
 # Copy all the files needes for the application
 ADD data /app/data
-COPY app_pipeline.py /app
-#COPY app.py /app
+COPY app.py /app
 ADD models /app/models
-ADD logs /app/logs
 
 # Create an entry point to make the image executable
 ENTRYPOINT ["streamlit", "run"]
