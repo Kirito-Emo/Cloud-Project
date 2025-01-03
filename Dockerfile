@@ -1,4 +1,4 @@
-FROM python:3.12.8-slim-bookworm
+FROM python:3.10.9-slim-buster
 
 WORKDIR /app
 
@@ -17,6 +17,8 @@ RUN apt-get update && apt-get install -y \
     g++ \
     build-essential
 RUN pip3 install -r requirements.txt
+RUN pip3 install setuptools==70.0.0
+RUN python -m pip install --upgrade pip==23.3
 
 # Expose port
 EXPOSE 8501
