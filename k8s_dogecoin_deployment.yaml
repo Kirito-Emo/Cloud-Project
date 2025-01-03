@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dogecoin-forecasting
+  labels:
+    app: dogecoin-forecasting-app
+  namespace: default
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: dogecoin-forecasting-app
+  template:
+    metadata:
+      labels:
+        app: dogecoin-forecasting-app
+    spec:
+      containers:
+        - name: dogecoin-forecasting
+          image: kiritoemo6/dogecoin-forecasting
+          resources:
+            requests:
+              memory: "400Mi"
+              cpu: "500m"
+            limits:
+              memory: "512Mi"
+              cpu: "750m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dogecoin-forecasting
+  namespace: default
+spec:
+  type: NodePort
+  selector:
+    app: dogecoin-forecasting-app
+  ports:
+  - port: 8501
+    targetPort: 8501
+    nodePort: 30080
