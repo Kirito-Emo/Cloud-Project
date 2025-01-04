@@ -55,10 +55,10 @@ collect_metrics_wrk() {
 
 # Horizontal scaling
 apply_horizontal_scaling() {
-    #local i=$1 # Use this to scale manually
+    local i=$1 # Use this to scale manually
     printf "\n>>> Applying horizontal scaling... \n"
-    #kubectl scale deployment dogecoin-forecasting --replicas=${i}  # Horizontal scaling in manual mode
-    kubectl autoscale deployment dogecoin-forecasting --cpu-percent=80 --min=2 --max=10 # Horizontal scaling with autoscaler
+    kubectl scale deployment dogecoin-forecasting --replicas=${i}  # Horizontal scaling in manual mode
+    #kubectl autoscale deployment dogecoin-forecasting --cpu-percent=80 --min=2 --max=10 # Horizontal scaling with autoscaler
     echo "Horizontal scaling applied."
 }
 
@@ -74,7 +74,7 @@ metadata:
     app: dogecoin-forecasting-app
   namespace: default
 spec:
-  replicas: 2
+  replicas: 7
   selector:
     matchLabels:
       app: dogecoin-forecasting-app
@@ -88,11 +88,11 @@ spec:
           image: kiritoemo6/dogecoin-forecasting
           resources:
             requests:
-              memory: "512Mi"
-              cpu: "750m"
-            limits:
               memory: "1Gi"
               cpu: "1"
+            limits:
+              memory: "2Gi"
+              cpu: "2"
 EOF
     echo "Vertical scaling applied."
 }
@@ -113,35 +113,22 @@ main() {
     collect_metrics_wrk 0
 
     # Phase 4: Horizontal scaling
-    apply_horizontal_scaling
+    apply_horizontal_scaling 6
     sleep 30  # Wait for pods to stabilize
     collect_metrics 1
-
-    # Phase 5: Test after horizontal scaling
     run_ab_test 1
     collect_metrics_ab 1
     run_wrk_test 1
     collect_metrics_wrk 1
 
-    # Phase 6: Vertical scaling
+    # Phase 5: Vertical scaling
     apply_vertical_scaling
     sleep 30  # Wait for pods to stabilize
-    #collect_metrics 2
-
-    # Phase 7: Test after vertical scaling
+    collect_metrics 2
     run_ab_test 2
     collect_metrics_ab 2
     run_wrk_test 2
     collect_metrics_wrk 2
-
-    # Phase 8: Re-testing horizontal scaling after vertical scaling
-    apply_horizontal_scaling
-    sleep 30  # Wait for pods to stabilize
-    collect_metrics 3
-    run_ab_test 3
-    collect_metrics_ab 3
-    run_wrk_test 3
-    collect_metrics_wrk 3
 
     printf "\n>>> Stress tests completed. Results saved in $OUTPUT_DIR"
 }
