@@ -1,0 +1,8 @@
+NAME                                   CPU(cores)   MEMORY(bytes)   
+dogecoin-forecasting-d5bd7c9bc-248d9   0m           32Mi            
+dogecoin-forecasting-d5bd7c9bc-28d9x   0m           32Mi            
+dogecoin-forecasting-d5bd7c9bc-n6zk8   0m           32Mi            
+dogecoin-forecasting-d5bd7c9bc-vrp67   0m           32Mi            
+dogecoin-forecasting-d5bd7c9bc-vwf6c   21m          38Mi            
+dogecoin-forecasting-d5bd7c9bc-wwwxr   1m           40Mi            
+dogecoin-forecasting-d5bd7c9bc-xh99w   94m          38Mi            

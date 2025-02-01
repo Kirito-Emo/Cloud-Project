@@ -58,7 +58,7 @@ apply_horizontal_scaling() {
     local i=$1 # Use this to scale manually
     printf "\n>>> Applying horizontal scaling... \n"
     kubectl scale deployment dogecoin-forecasting --replicas=${i}  # Horizontal scaling in manual mode
-    #kubectl autoscale deployment dogecoin-forecasting --cpu-percent=80 --min=2 --max=10 # Horizontal scaling with autoscaler
+    #kubectl autoscale deployment dogecoin-forecasting --cpu-percent=80 --min=3 --max=10 # Horizontal scaling with autoscaler
     echo "Horizontal scaling applied."
 }
 
@@ -88,11 +88,11 @@ spec:
           image: kiritoemo6/dogecoin-forecasting
           resources:
             requests:
-              memory: "1Gi"
-              cpu: "1"
+              memory: "512Mi"
+              cpu: "500m"
             limits:
-              memory: "2Gi"
-              cpu: "2"
+              memory: "750Mi"
+              cpu: "1"
 EOF
     echo "Vertical scaling applied."
 }
@@ -113,7 +113,7 @@ main() {
     collect_metrics_wrk 0
 
     # Phase 4: Horizontal scaling
-    apply_horizontal_scaling 6
+    apply_horizontal_scaling 7
     sleep 30  # Wait for pods to stabilize
     collect_metrics 1
     run_ab_test 1

@@ -9,3 +9,4 @@ nodes:
     hostPort: 30010
 - role: worker
 - role: worker
+- role: worker
