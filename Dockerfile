@@ -1,5 +1,8 @@
 FROM python:3.10.9-slim-buster
 
+# Ensures that Python outputs are sent straight to terminal (stdout) without buffering
+ENV PYTHONUNBUFFERED 1
+
 WORKDIR /app
 
 # Copy requirements
@@ -16,7 +19,9 @@ RUN apt-get update && apt-get install -y \
     gcc \
     g++ \
     build-essential
-RUN pip3 install -r requirements.txt
+RUN pip3 install --no-cache-dir -r requirements.txt
+
+# To fix vulnerabilities
 RUN pip3 install setuptools==70.0.0
 RUN python -m pip install --upgrade pip==23.3
 
@@ -27,6 +32,10 @@ EXPOSE 8501
 ADD data /app/data
 COPY app.py /app
 ADD models /app/models
+
+# Creates a non-root user (streamlit) to enhance security
+RUN useradd -m streamlit && chown -R streamlit /app
+USER streamlit
 
 # Create an entry point to make the image executable
 ENTRYPOINT ["streamlit", "run"]
