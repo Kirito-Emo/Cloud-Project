@@ -1,7 +1,7 @@
 FROM python:3.10.9-slim-buster
 
 # Ensures that Python outputs are sent straight to terminal (stdout) without buffering
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
