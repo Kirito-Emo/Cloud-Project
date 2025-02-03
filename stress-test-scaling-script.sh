@@ -3,7 +3,7 @@
 # Script to execute stress tests and collect Kubernetes metrics
 
 # Initial configurations
-SERVICE_URL="http://127.0.0.1:30070/"
+SERVICE_URL="http://localhost:80/"
 TEST_DURATION="30s"
 MAX_CONNECTIONS=5000
 TOTAL_REQUESTS=50000
