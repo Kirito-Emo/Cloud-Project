@@ -31,6 +31,7 @@ EXPOSE 8501
 
 # Copy all the files needes for the application
 ADD data /app/data
+ADD logs /app/logs
 COPY app.py /app
 ADD models /app/models
 

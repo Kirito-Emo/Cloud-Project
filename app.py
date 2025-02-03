@@ -6,7 +6,7 @@ from PIL import Image
 
 # Set up logging to write to a persistent file
 logging.basicConfig(
-    filename='/app/logs/predictions.log',
+    filename='logs/predictions.log',
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s'
 )

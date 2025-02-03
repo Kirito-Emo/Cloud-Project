@@ -39,8 +39,7 @@ metadata:
   name: dogecoin-forecasting
   namespace: default
 spec:
-  type: ClusterIP21
-a
+  type: ClusterIP
   selector:
     app: dogecoin-forecasting-app
   ports:
