@@ -31,7 +31,7 @@ spec:
       volumes:
         - name: storage-volume
           persistentVolumeClaim:
-            claimName: dogecoin-pvc
+            claimName: dogecoin-logs-pvc
 ---
 apiVersion: v1
 kind: Service
@@ -43,5 +43,6 @@ spec:
   selector:
     app: dogecoin-forecasting-app
   ports:
-  - port: 8501
-    targetPort: 8501
+  -   protocol: TCP
+      port: 8501
+      targetPort: 8501

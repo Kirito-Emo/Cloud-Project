@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 import joblib
 import logging
-from PIL import Image
 
 # Set up logging to write to a persistent file
 logging.basicConfig(
@@ -20,8 +19,6 @@ def load(transformer_path, model_path):
 
 # App title
 st.title('Dogecoin Price Prediction')
-image = Image.open('data/dogecoin-image.png')
-st.image(image, use_container_width=True)
 
 # Function to make predictions
 def inference(subject_data, transformer, model, feat_cols):

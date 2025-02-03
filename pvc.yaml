@@ -4,7 +4,7 @@ metadata:
   name: dogecoin-logs-pvc
 spec:
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   resources:
     requests:
       storage: 1Gi

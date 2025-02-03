@@ -7,6 +7,14 @@ nodes:
     hostPort: 80
   #- containerPort: 443 # Use this to enable HTTPS
   #  hostPort: 443
+  labels:
+      ingress-ready: "true"
 - role: worker
+  labels:
+    ingress-ready: "true"
 - role: worker
+  labels:
+    ingress-ready: "true"
 - role: worker
+  labels:
+    ingress-ready: "true"
