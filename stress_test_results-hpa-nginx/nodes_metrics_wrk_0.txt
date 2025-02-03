@@ -1,0 +1,5 @@
+NAME                 CPU(cores)   CPU%   MEMORY(bytes)   MEMORY%   
+kind-control-plane   1429m        8%     1091Mi          16%       
+kind-worker          794m         4%     422Mi           6%        
+kind-worker2         789m         4%     485Mi           7%        
+kind-worker3         790m         4%     380Mi           5%        
