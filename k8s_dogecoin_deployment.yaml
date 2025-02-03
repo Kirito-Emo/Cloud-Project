@@ -25,6 +25,13 @@ spec:
             limits:
               memory: "512Mi"
               cpu: "750m"
+          volumeMounts:
+            - mountPath: "/app/data"
+              name: storage-volume
+      volumes:
+        - name: storage-volume
+          persistentVolumeClaim:
+            claimName: dogecoin-pvc
 ---
 apiVersion: v1
 kind: Service
@@ -32,10 +39,10 @@ metadata:
   name: dogecoin-forecasting
   namespace: default
 spec:
-  type: NodePort
+  type: ClusterIP21
+a
   selector:
     app: dogecoin-forecasting-app
   ports:
   - port: 8501
     targetPort: 8501
-    nodePort: 30080

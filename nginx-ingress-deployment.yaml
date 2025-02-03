@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-ingress-controller
+  namespace: ingress-nginx
+spec:
+  replicas: 3   # Scale to 3 replicas for fault tolerance
+  selector:
+    matchLabels:
+      app: nginx-ingress-controller
+  template:
+    metadata:
+      labels:
+        app: nginx-ingress-controller
+    spec:
+      containers:
+      - name: nginx-ingress-controller
+        image: nginx-ingress-controller:latest
+        args:
+        - /nginx-ingress-controller
+        - --configmap=ingress-nginx/nginx-configuration
+        - --custom-conf=/etc/nginx/nginx-custom.conf  # Specify custom config
+        volumeMounts:
+        - mountPath: /etc/nginx/nginx-custom.conf
+          name: custom-nginx-config
+          subPath: custom-nginx.conf  # Mount the custom config file
+      volumes:
+      - name: custom-nginx-config
+        configMap:
+          name: nginx-custom-rules

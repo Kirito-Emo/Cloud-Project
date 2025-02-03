@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-custom-rules
+  namespace: ingress-nginx
+data:
+  custom-nginx.conf: |
+    server {
+        listen 80;
+        server_name localhost;  # Change to your domain name
+
+        # Limit requests per IP (DDoS Protection)
+        limit_req_zone $binary_remote_addr zone=one:10m rate=5r/s;
+
+        location / {
+            proxy_pass http://localhost:8501;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+
+            # Apply DDoS rate limiting
+            limit_req zone=one burst=10 nodelay;
+
+            # Custom WAF protection
+            set $block_attack 0;
+
+            # SQL Injection protection
+            if ($query_string ~* "union.*select.*\(") { set $block_attack 1; }
+            if ($query_string ~* "select.*from.*where") { set $block_attack 1; }
+            if ($query_string ~* "1=1") { set $block_attack 1; }
+            if ($query_string ~* "benchmark\(") { set $block_attack 1; }
+
+            # XSS protection
+            if ($request_uri ~* "<script>") { set $block_attack 1; }
+            if ($request_uri ~* "%3Cscript%3E") { set $block_attack 1; }
+
+            # Command Injection protection
+            if ($request_uri ~* ";.*(wget|curl|ls|pwd|cat)") { set $block_attack 1; }
+
+            # Block suspicious User-Agent (bots)
+            if ($http_user_agent ~* (python|curl|wget|scrapy|bot)) { return 403; }
+
+            # If attack is detected, return 403 Forbidden
+            if ($block_attack = 1) {
+                return 403;
+            }
+        }
+    }
