@@ -24,6 +24,7 @@ RUN pip3 install --no-cache-dir -r requirements.txt
 # To fix vulnerabilities
 RUN pip3 install setuptools==70.0.0
 RUN python -m pip install --upgrade pip==23.3
+RUN apt-get remove --purge -y binutils && apt-get autoremove -y
 
 # Expose port
 EXPOSE 8501
