@@ -5,9 +5,8 @@ metadata:
   namespace: default
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
-    nginx.ingress.kubernetes.io/proxy-body-size: "10m"
-    nginx.ingress.kubernetes.io/ssl-redirect: "false"
-    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"   # Disable SSL redirect (just for testing purposes)
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP" # Set backend protocol to HTTP (just for testing purposes)
 spec:
   ingressClassName: nginx
   rules:
