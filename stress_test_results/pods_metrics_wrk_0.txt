@@ -1,0 +1,4 @@
+NAME                                    CPU(cores)   MEMORY(bytes)   
+dogecoin-forecasting-6bccbb6689-hh8ql   690m         72Mi            
+dogecoin-forecasting-6bccbb6689-mptpw   750m         130Mi           
+dogecoin-forecasting-6bccbb6689-mrbk6   682m         62Mi            
